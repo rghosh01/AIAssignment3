@@ -33,7 +33,33 @@ public class Board {
 
         return null;
     }
-
+    public static char[][] genRandBoard(int size) {
+        int boardSize = size;
+        Random rng = new Random();
+        char board[][] = new char[boardSize][boardSize];
+        int sCol = rng.nextInt(boardSize);
+        int sRow = rng.nextInt(boardSize);
+        int gCol = rng.nextInt(boardSize);
+        int gRow = rng.nextInt(boardSize);
+        while(gCol == sCol && gRow == sRow){
+            gCol = rng.nextInt(boardSize);
+            gRow = rng.nextInt(boardSize);
+        }
+        for(int i = 0; i < boardSize; i++){
+            for(int j = 0; j < boardSize; j++){
+                if(i == sRow && j == sCol){
+                    board[i][j] = 'S';
+                }
+                else if(i == gRow && j == gCol){
+                    board[i][j] = 'G';
+                }
+                else {
+                    board[i][j] =(char) ((rng.nextInt(10) + 1) + '0');
+                }
+            }
+        }
+        return board;
+    }
     // This method finds the end point of the board,
     // end point is coordinate with 'G'
     public Coordinate getEndPoint() {
@@ -118,7 +144,7 @@ public class Board {
 
 
     public static void main(String[] args) throws FileNotFoundException {
-        Board myBoard = new Board("assignment_1/assignment 1, sample board - 0.txt");
+        Board myBoard = new Board("assignment_1/src/assignment 1, sample board - 0.txt");
         myBoard.generateBoard();
     }
 
