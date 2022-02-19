@@ -18,7 +18,9 @@ public class Board {
     public Board(String fileName) {
         this.fileName = fileName;
     }
-
+    public Board(int size){
+        genRandBoard(size);
+    }
     // This method finds the starting point of the board,
     // Starting point is coordinate with 'S'
     public Coordinate getStartPoint() {

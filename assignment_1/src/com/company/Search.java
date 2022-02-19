@@ -5,7 +5,7 @@ import java.lang.Math;
 
 public class Search {
     // This class holds search algorithms for the board, in particularly, the A* Search Algorithm
-
+    List<String> output = new ArrayList<>();
     Board gameBoard;
     Agent agent;
     int heuristic;
@@ -32,12 +32,9 @@ public class Search {
         PriorityQueue<State> OPEN = new PriorityQueue<State>(StateComparator);
         Heuristics myHeuristic = new Heuristics(this.heuristic);
         List<Integer> costList = new ArrayList<>();
-        List<Integer> currY = new ArrayList<>();
-        List<Integer> currX = new ArrayList<>();
-        List<Integer> upVal = new ArrayList<>();
-        List<Integer> leftVal = new ArrayList<>();
-        List<Integer> rightVal = new ArrayList<>();
-        List<Integer> downVal = new ArrayList<>();
+        List<Integer> ManVal = new ArrayList<>();
+        List<Double> euclidVal = new ArrayList<>();
+        List<Integer> bash = new ArrayList<>();
         // initialize the cost_so_far matrix
         int rows = this.gameBoard.numRows;
         int columns = this.gameBoard.numCols;
@@ -83,15 +80,22 @@ public class Search {
                 // determine series of actions in optimal path
                 while(!Objects.isNull(current.previousMove)) {
                     costList.add(current.currentCost);
-                    currX.add(current.getX());
-                    currY.add(current.getY());
+                    euclidVal.add(Math.sqrt(Math.pow(gameBoard.getEndPoint().getX() - current.getX(),2)+(Math.pow(gameBoard.getEndPoint().getY() - current.getY(),2))));
+                    ManVal.add(Math.abs(gameBoard.getEndPoint().getX() - current.getX()) + Math.abs(gameBoard.getEndPoint().getY() - current.getY()));
+                    if(current.previousMove == "bash"){
+                        bash.add(1);
+                    }
+                    else {
+                        bash.add(0);
+                    }
                     MoveList.add(current.previousMove);
                     State temp = current.previousState;
                     current = temp;
                 }
+                Collections.reverse(ManVal);
                 Collections.reverse(MoveList);
-                Collections.reverse(currX);
-                Collections.reverse(currY);
+                Collections.reverse(bash);
+                Collections.reverse(euclidVal);
                 break;
             }
 
@@ -136,13 +140,10 @@ public class Search {
 
 //        // ---------- CALCULATION OF THE OPTIMAL PATH -----------
         // Determine the number of actions in optimal path
-        numActions = MoveList.size();;
 
-        //System.out.println("Score of the path: " + score);
-        //System.out.println("Number of actions: " + numActions);
-        //System.out.println("Number of nodes expanded: " + numNodesExpanded);
         for(int j = 0; j < MoveList.size(); j++) {
-            System.out.println(MoveList.get(j) + "\t" + costList.get(j) + "\t" + currX.get(j) + "\t" + currY.get(j));
+            output.add(costList.get(j) + "," + euclidVal.get(j) + "," + ManVal.get(j) + "," + bash.get(j));
+            System.out.println(output.get(j));
         }
 
     } // End of A_Star_Search()

@@ -1,6 +1,9 @@
 package com.company;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * CS4341 Assignment 1
@@ -13,12 +16,11 @@ import java.io.FileNotFoundException;
 public class astar {
 
     // Main method to run the program
-    public static void main(String[] args) throws FileNotFoundException {
-        long beforeUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-        Board gameboard = new Board("assignment_1/map2.txt");
+    public static void main(String[] args) throws IOException {
+        /*long beforeUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+        Board gameboard = new Board(10);
 //        Board gameboard = new Board(args[0]);
         //gameboard.generateBoard();
-        gameboard.genRandBoard(10);
 
         Agent agent1 = new Agent(gameboard);
 //        Search search1 = new Search(gameboard, agent1, Integer.parseInt(args[1]));
@@ -28,7 +30,38 @@ public class astar {
         long afterUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
         long actualMemUsed=afterUsedMem-beforeUsedMem;
 //        System.out.println(actualMemUsed);
+*/
+        runLearning();
+    }
+    public static void runLearning() throws IOException {
+        // constructs the output file
+        File stats = new File("stats.csv");
+        stats.createNewFile();
+        FileWriter statsW = new FileWriter("stats.csv");
 
+        // write hedder line
+        statsW.write("path_cost, Euclidean Distance, Manhattan Distance, Bash");
+        statsW.write("\n");
+        // square location
+        // robot location
+        // goal location
+
+        long start = System.currentTimeMillis();
+        while (System.currentTimeMillis() - start < start+(120*60*1000)) {
+            System.out.println("Running for: "+Long.valueOf((start+(120*60*1000) -System.currentTimeMillis()/1000))+ "More Sec");
+            // generate board,
+            Board rgen = new Board(10);
+            // solve board
+            Agent agent1 = new Agent(rgen);
+            Search search = new Search(rgen, agent1, 5);
+            search.A_Star_Search();
+            // write path to a CSV
+        for(int i = 0; i < search.output.size(); i++) {
+            statsW.write(search.output.get(i));
+            statsW.write("\n");
+        }
+        }
+        statsW.close();
     }
 
 }
