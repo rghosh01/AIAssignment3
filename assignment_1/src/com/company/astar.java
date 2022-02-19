@@ -1,6 +1,9 @@
 package com.company;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * CS4341 Assignment 1
@@ -15,8 +18,8 @@ public class astar {
     // Main method to run the program
     public static void main(String[] args) throws FileNotFoundException {
         long beforeUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-        Board gameboard = new Board("assignment_1/map2.txt");
-//        Board gameboard = new Board(args[0]);
+
+        Board gameboard = new Board("assignment_1/src/assignment 1, sample board - 0.txt");
         gameboard.generateBoard();
 
         Agent agent1 = new Agent(gameboard);
@@ -29,5 +32,31 @@ public class astar {
 //        System.out.println(actualMemUsed);
 
     }
+    public void runLearning() throws IOException {
+        // constructs the output file
+        File stats = new File("stats.csv");
+        stats.createNewFile();
+        FileWriter statsW = new FileWriter("stats.csv");
 
+        // write hedder line
+        statsW.write("path_cost,valuesOfFeatures,adjacent");
+        // square location
+        // robot location
+        // goal location
+
+        long start = System.currentTimeMillis();
+        while (System.currentTimeMillis() - start < start+(120*60*1000)) {
+            System.out.println("Running for: "+Long.valueOf((start+(120*60*1000) -System.currentTimeMillis()/1000))+ "More Sec");
+            // generate board,
+            Board rgen = new Board(10);
+            // solve board
+            Agent agent1 = new Agent(rgen);
+            Search search = new Search(rgen, agent1, 5);
+
+            // write path to a CSV
+            statsW.write("Write String");
+
+        }
+        statsW.close();
+    }
 }

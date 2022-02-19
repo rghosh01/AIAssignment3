@@ -19,6 +19,9 @@ public class Board {
         this.fileName = fileName;
     }
 
+    // overloaded constructor:
+    public Board(int size) {gameboard = genRandBoard(size); }
+
     // This method finds the starting point of the board,
     // Starting point is coordinate with 'S'
     public Coordinate getStartPoint() {
@@ -33,6 +36,7 @@ public class Board {
 
         return null;
     }
+
     public static char[][] genRandBoard(int size) {
         int boardSize = size;
         Random rng = new Random();
