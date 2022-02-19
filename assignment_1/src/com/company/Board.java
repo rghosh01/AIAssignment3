@@ -33,7 +33,7 @@ public class Board {
 
         return null;
     }
-    public static char[][] genRandBoard(int size) {
+    public void genRandBoard(int size) {
         int boardSize = size;
         Random rng = new Random();
         char board[][] = new char[boardSize][boardSize];
@@ -54,11 +54,13 @@ public class Board {
                     board[i][j] = 'G';
                 }
                 else {
-                    board[i][j] =(char) ((rng.nextInt(10) + 1) + '0');
+                    board[i][j] =(char) ((rng.nextInt(9) + 1) + '0');
                 }
             }
         }
-        return board;
+        numCols = boardSize;
+        numRows = boardSize;
+        gameboard = board;
     }
     // This method finds the end point of the board,
     // end point is coordinate with 'G'

@@ -31,7 +31,13 @@ public class Search {
         List<String> MoveList = new ArrayList<>();
         PriorityQueue<State> OPEN = new PriorityQueue<State>(StateComparator);
         Heuristics myHeuristic = new Heuristics(this.heuristic);
-
+        List<Integer> costList = new ArrayList<>();
+        List<Integer> currY = new ArrayList<>();
+        List<Integer> currX = new ArrayList<>();
+        List<Integer> upVal = new ArrayList<>();
+        List<Integer> leftVal = new ArrayList<>();
+        List<Integer> rightVal = new ArrayList<>();
+        List<Integer> downVal = new ArrayList<>();
         // initialize the cost_so_far matrix
         int rows = this.gameBoard.numRows;
         int columns = this.gameBoard.numCols;
@@ -76,12 +82,16 @@ public class Search {
 
                 // determine series of actions in optimal path
                 while(!Objects.isNull(current.previousMove)) {
+                    costList.add(current.currentCost);
+                    currX.add(current.getX());
+                    currY.add(current.getY());
                     MoveList.add(current.previousMove);
                     State temp = current.previousState;
                     current = temp;
                 }
                 Collections.reverse(MoveList);
-
+                Collections.reverse(currX);
+                Collections.reverse(currY);
                 break;
             }
 
@@ -128,12 +138,11 @@ public class Search {
         // Determine the number of actions in optimal path
         numActions = MoveList.size();;
 
-        System.out.println("Score of the path: " + score);
-        System.out.println("Number of actions: " + numActions);
-        System.out.println("Number of nodes expanded: " + numNodesExpanded);
-
+        //System.out.println("Score of the path: " + score);
+        //System.out.println("Number of actions: " + numActions);
+        //System.out.println("Number of nodes expanded: " + numNodesExpanded);
         for(int j = 0; j < MoveList.size(); j++) {
-            System.out.println(MoveList.get(j));
+            System.out.println(MoveList.get(j) + "\t" + costList.get(j) + "\t" + currX.get(j) + "\t" + currY.get(j));
         }
 
     } // End of A_Star_Search()
