@@ -15,7 +15,7 @@ public class Heuristics {
     public static final int H_FOURTH = 4;
     public static final int H_FIFTH = 5;
     public static final int H_SIXTH = 6;
-
+    public static final int H_SEVENTH = 7;
     int heuristicChoice;
 
     // Constructor for the Heuristics class
@@ -24,7 +24,7 @@ public class Heuristics {
     }
 
     // calculates the value of a specified heuristic function
-    public int heuristicFunction(int choice, Coordinate current, Coordinate target) {
+    public int heuristicFunction(int choice, Coordinate current, Coordinate target, int bash) {
         // Choosing heuristic function
         switch(choice)
         {
@@ -40,6 +40,8 @@ public class Heuristics {
                 return admissableHeuristic(current, target);
             case H_SIXTH:
                 return nonadmissableHeuristic(current, target);
+            case H_SEVENTH:
+                return trainerHeuristic(current,target,bash);
 
         }
         return 0;
@@ -49,7 +51,6 @@ public class Heuristics {
     public int findHorizontal(Coordinate current, Coordinate target) {
          return Math.abs(current.getX() - target.getX());
     }
-
     // Vertical heuristic function
     public int findVertical(Coordinate current, Coordinate target) {
         return Math.abs(current.getY() - target.getY());
@@ -78,6 +79,11 @@ public class Heuristics {
     // inadmissible heuristic function (3 times admissible function)
     public int nonadmissableHeuristic(Coordinate current, Coordinate target) {
         return 3 * admissableHeuristic(current, target);
+    }
+    public int trainerHeuristic(Coordinate current, Coordinate target, int bash){
+        double euclid = Math.sqrt(Math.pow(target.getX() - current.getX(),2)+(Math.pow(target.getY() - current.getY(),2)));
+        int manhat = Math.abs(target.getX() - current.getX()) + Math.abs(target.getY() - current.getY());
+        return (int) ((euclid*1.259) + (manhat*1.5921) + (bash * 0.5953) + 9.1389);
     }
 
 }

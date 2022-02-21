@@ -113,7 +113,11 @@ public class Search {
                         [NextState.get(i).getY()]
                         [NextState.get(i).getFaceDirection()-1].getCurrentCost() == -1) {
                     // determine the priority of the new state
-                    NextState.get(i).priorityValue = NextState.get(i).currentCost + myHeuristic.heuristicFunction(this.heuristic, NextState.get(i).getCoordinate(), endPoint);
+                    int b = 0;
+                    if(current.previousMove == "Bash"){
+                        b = 1;
+                    }
+                    NextState.get(i).priorityValue = NextState.get(i).currentCost + myHeuristic.heuristicFunction(this.heuristic, NextState.get(i).getCoordinate(), endPoint,b);
 
                     // Put the next state into the cost_so_far matrix
                     Best_States[NextState.get(i).getX()][NextState.get(i).getY()][NextState.get(i).getFaceDirection()-1] = NextState.get(i);
@@ -126,7 +130,11 @@ public class Search {
                         [NextState.get(i).getY()]
                         [NextState.get(i).getFaceDirection()-1].getCurrentCost() > NextState.get(i).currentCost) {
                     // determine the priority of the new state
-                    NextState.get(i).priorityValue = NextState.get(i).currentCost + myHeuristic.heuristicFunction(this.heuristic, NextState.get(i).getCoordinate(), endPoint);
+                    int b = 0;
+                    if(current.previousMove == "Bash"){
+                        b = 1;
+                    }
+                    NextState.get(i).priorityValue = NextState.get(i).currentCost + myHeuristic.heuristicFunction(this.heuristic, NextState.get(i).getCoordinate(), endPoint,b);
                     // set old worse node to now be the new, better node
                     Best_States[current.getX()][current.getY()][current.getFaceDirection()-1] = NextState.get(i);
                     // Add new state to the priority queue
@@ -140,11 +148,12 @@ public class Search {
 
 //        // ---------- CALCULATION OF THE OPTIMAL PATH -----------
         // Determine the number of actions in optimal path
-
+        /*
         for(int j = 0; j < MoveList.size(); j++) {
             output.add(costList.get(j) + "," + euclidVal.get(j) + "," + ManVal.get(j) + "," + bash.get(j));
             System.out.println(output.get(j));
-        }
+        }*/
+        System.out.println("Heuristic:" + this.heuristic + " Score: " + score + " Nodes Explored: " + numNodesExpanded);
 
     } // End of A_Star_Search()
 }

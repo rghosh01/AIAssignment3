@@ -31,7 +31,20 @@ public class astar {
         long actualMemUsed=afterUsedMem-beforeUsedMem;
 //        System.out.println(actualMemUsed);
 */
-        runLearning();
+        //runLearning();
+        for(int i = 0; i < 10; i++) {
+            System.out.println("Map: " + (i + 1));
+            Board rgen = new Board(1000);
+            Agent agent1 = new Agent(rgen);
+            Agent agent2 = new Agent(rgen);
+            Agent agent3 = new Agent(rgen);
+            Search search = new Search(rgen, agent1, 5);
+            Search search2 = new Search(rgen, agent2, 6);
+            Search search3 = new Search(rgen, agent3, 7);
+            search.A_Star_Search();
+            search2.A_Star_Search();
+            search3.A_Star_Search();
+        }
     }
     public static void runLearning() throws IOException {
         // constructs the output file
@@ -53,7 +66,7 @@ public class astar {
             Board rgen = new Board(10);
             // solve board
             Agent agent1 = new Agent(rgen);
-            Search search = new Search(rgen, agent1, 5);
+            Search search = new Search(rgen, agent1, 7);
             search.A_Star_Search();
             // write path to a CSV
         for(int i = 0; i < search.output.size(); i++) {
